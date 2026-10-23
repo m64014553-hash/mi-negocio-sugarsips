@@ -1,0 +1,702 @@
+<!DOCTYPE html>
+<html lang="es" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SUGAR SIPS | Sweets & Drinks - Puerto Azul</title>
+
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- Google Fonts (Playfair Display & Quicksand / Poppins) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;0,700;1,400&family=Quicksand:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- Tailwind Configuration for Custom Coffee & Pastel Palette -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        latte: {
+                            50: '#FAF6F0',   // Crema suave
+                            100: '#F4ECE1',  // Beige pastel
+                            200: '#E8D9C5',  // Café claro suave
+                            300: '#D7BF9F',  // Caramelo claro pastel
+                            400: '#C2A17B',  // Café con leche
+                            500: '#A4805A',  // Café cálido elegante
+                            600: '#866341',  // Café tostado medio
+                            700: '#67492E',  // Café profundo
+                            800: '#4B331E',  // Café espresso
+                        },
+                        blush: {
+                            50: '#FDF7F7',
+                            100: '#FBF0F0',
+                            200: '#F6DFE0',  // Rosa empolvado pastel
+                            300: '#EBC3C6',
+                            400: '#DB9E9E'
+                        }
+                    },
+                    fontFamily: {
+                        playfair: ['Playfair Display', 'serif'],
+                        sans: ['Quicksand', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        body {
+            font-family: 'Quicksand', sans-serif;
+            background-color: #FAF6F0;
+            color: #4B331E;
+        }
+
+        /* Modern subtle scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #FAF6F0;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #D7BF9F;
+            border-radius: 9999px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #C2A17B;
+        }
+
+        /* Soft Glow Glassmorphism */
+        .glass-panel {
+            background: rgba(254, 252, 248, 0.85);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(215, 191, 159, 0.3);
+        }
+
+        .hero-pattern {
+            background-color: #FAF6F0;
+            background-image: radial-gradient(#E8D9C5 1px, transparent 1px);
+            background-size: 24px 24px;
+        }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col justify-between selection:bg-latte-200 selection:text-latte-800">
+
+    <!-- TOP ANNOUNCEMENT BAR (Puerto Azul Exclusive) -->
+    <div class="bg-gradient-to-r from-latte-500 via-latte-400 to-blush-400 text-white text-xs sm:text-sm py-2 px-4 text-center font-semibold shadow-inner flex items-center justify-center gap-2">
+        <i class="fa-solid fa-location-dot animate-bounce text-blush-100"></i>
+        <span>Atención exclusiva para: <strong class="underline decoration-blush-200 underline-offset-2">Solo Puerto Azul</strong></span>
+        <span class="hidden md:inline-block ml-2 text-latte-100 font-normal">| Pedidos directos vía WhatsApp</span>
+    </div>
+
+    <!-- HEADER / NAVBAR -->
+    <header class="sticky top-0 z-40 bg-latte-50/90 backdrop-blur-md border-b border-latte-200/60 shadow-xs">
+        <div class="max-w-6xl mx-auto px-4 py-3 flex items-center justify-between">
+            
+            <!-- Logo & Brand Name -->
+            <a href="#" class="flex items-center gap-3 group">
+                <div class="w-11 h-11 rounded-2xl bg-gradient-to-tr from-latte-400 to-blush-300 flex items-center justify-center text-white text-xl shadow-md group-hover:scale-105 transition-all duration-300">
+                    <i class="fa-solid fa-mug-hot"></i>
+                </div>
+                <div>
+                    <h1 class="font-playfair text-2xl font-bold text-latte-800 tracking-wide leading-none">
+                        SUGAR SIPS
+                    </h1>
+                    <span class="text-[10px] font-bold tracking-[0.2em] text-latte-500 uppercase block mt-1">Sweets & Drinks</span>
+                </div>
+            </a>
+
+            <!-- Actions & Cart Button -->
+            <div class="flex items-center gap-3">
+                <a href="#precios" class="hidden sm:flex items-center gap-1.5 text-xs font-semibold text-latte-600 bg-latte-100 hover:bg-latte-200 px-3.5 py-2 rounded-full transition-colors border border-latte-200">
+                    <i class="fa-solid fa-pen-to-square text-latte-500"></i> Ajustar Precios
+                </a>
+
+                <!-- Cart Toggle Button -->
+                <button onclick="toggleCart()" class="relative bg-latte-700 hover:bg-latte-800 text-white px-4 py-2 rounded-full font-semibold text-sm transition-all duration-200 flex items-center gap-2.5 shadow-md hover:shadow-lg active:scale-95">
+                    <i class="fa-solid fa-bag-shopping text-latte-200"></i>
+                    <span class="hidden sm:inline">Mi Pedido</span>
+                    <span id="cartBadge" class="bg-blush-400 text-white text-xs font-bold rounded-full w-5 h-5 flex items-center justify-center shadow-xs">0</span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- HERO SECTION -->
+    <section class="hero-pattern py-12 md:py-16 relative overflow-hidden">
+        <div class="max-w-6xl mx-auto px-4 grid md:grid-cols-2 gap-10 items-center">
+            
+            <div class="space-y-5 text-center md:text-left">
+                <div class="inline-flex items-center gap-2 bg-blush-100 text-latte-700 border border-blush-200 px-3.5 py-1.5 rounded-full text-xs font-bold tracking-wide">
+                    <i class="fa-solid fa-heart text-blush-400"></i>
+                    <span>Sabor Artesanal & Frescura</span>
+                </div>
+
+                <h2 class="font-playfair text-4xl sm:text-5xl lg:text-6xl text-latte-800 font-bold leading-tight">
+                    Endulza tus momentos en <span class="text-latte-500 italic">Puerto Azul</span>
+                </h2>
+
+                <p class="text-latte-600 text-sm sm:text-base leading-relaxed max-w-lg mx-auto md:mx-0">
+                    Descubre nuestros deliciosos Cheesecakes artesanales y refrescantes Frappés fríos. Preparados al instante para llevar la dulzura perfecta a tu hogar.
+                </p>
+
+                <div class="flex flex-wrap gap-3 justify-center md:justify-start pt-2">
+                    <a href="#menu" class="bg-latte-600 hover:bg-latte-700 text-white font-semibold px-6 py-3 rounded-full shadow-md hover:shadow-lg transition-all text-sm flex items-center gap-2">
+                        <i class="fa-solid fa-utensils"></i> Explorar Menú
+                    </a>
+                    <a href="#contacto" class="bg-white text-latte-700 hover:bg-latte-50 border border-latte-200 font-semibold px-6 py-3 rounded-full shadow-xs hover:shadow transition-all text-sm flex items-center gap-2">
+                        <i class="fa-brands fa-whatsapp text-emerald-600 text-base"></i> Contáctanos
+                    </a>
+                </div>
+            </div>
+
+            <!-- Hero Visual Cards -->
+            <div class="relative flex justify-center items-center">
+                <div class="w-72 h-72 sm:w-80 sm:h-80 bg-latte-200/50 rounded-full absolute -z-10 blur-3xl"></div>
+                
+                <div class="grid grid-cols-2 gap-4 w-full max-w-sm relative">
+                    <!-- Card 1: Cheesecake -->
+                    <div class="bg-white/90 p-5 rounded-3xl shadow-lg border border-latte-200 transform -rotate-3 hover:rotate-0 transition-transform duration-300">
+                        <div class="w-12 h-12 rounded-2xl bg-blush-100 text-blush-400 flex items-center justify-center text-2xl mb-3">
+                            🍰
+                        </div>
+                        <h3 class="font-playfair font-bold text-lg text-latte-800">Cheesecakes</h3>
+                        <p class="text-xs text-latte-500 mt-1">Textura cremosa y base crujiente inolvidable.</p>
+                    </div>
+
+                    <!-- Card 2: Frappe -->
+                    <div class="bg-white/90 p-5 rounded-3xl shadow-lg border border-latte-200 transform rotate-3 hover:rotate-0 transition-transform duration-300 mt-6">
+                        <div class="w-12 h-12 rounded-2xl bg-latte-100 text-latte-600 flex items-center justify-center text-2xl mb-3">
+                            🥤
+                        </div>
+                        <h3 class="font-playfair font-bold text-lg text-latte-800">Frappés</h3>
+                        <p class="text-xs text-latte-500 mt-1">Bebidas heladas batidas a la perfección.</p>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- CATALOG / MENU SECTION -->
+    <main id="menu" class="max-w-6xl mx-auto px-4 py-12 flex-grow w-full">
+        
+        <div class="text-center max-w-2xl mx-auto mb-10">
+            <span class="text-xs font-bold text-latte-500 uppercase tracking-widest block mb-1">Nuestra Selección</span>
+            <h2 class="font-playfair text-3xl sm:text-4xl text-latte-800 font-bold">Menú SUGAR SIPS</h2>
+            <div class="w-16 h-1 bg-latte-300 mx-auto my-3 rounded-full"></div>
+            <p class="text-latte-600 text-sm">Selecciona tus favoritos y personaliza tu pedido para entrega en Puerto Azul.</p>
+
+            <!-- Category Filter Tabs -->
+            <div class="flex justify-center gap-2 mt-6">
+                <button onclick="filterCategory('all')" id="tab-all" class="cat-tab bg-latte-700 text-white px-5 py-2 rounded-full text-xs sm:text-sm font-semibold transition-all shadow-xs">
+                    Todos
+                </button>
+                <button onclick="filterCategory('cheesecake')" id="tab-cheesecake" class="cat-tab bg-white text-latte-700 hover:bg-latte-100 border border-latte-200 px-5 py-2 rounded-full text-xs sm:text-sm font-semibold transition-all">
+                    🍰 Cheesecakes
+                </button>
+                <button onclick="filterCategory('frappe')" id="tab-frappe" class="cat-tab bg-white text-latte-700 hover:bg-latte-100 border border-latte-200 px-5 py-2 rounded-full text-xs sm:text-sm font-semibold transition-all">
+                    🥤 Frappés
+                </button>
+            </div>
+        </div>
+
+        <!-- PRODUCTS GRID -->
+        <div id="productsGrid" class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+            <!-- Dynamic JS Ingestion -->
+        </div>
+
+    </main>
+
+    <!-- PRICE CUSTOMIZATION SECTION -->
+    <section id="precios" class="bg-latte-100/70 border-y border-latte-200 py-10">
+        <div class="max-w-4xl mx-auto px-4">
+            <div class="bg-white rounded-3xl p-6 shadow-sm border border-latte-200/80">
+                <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 mb-4 pb-4 border-b border-latte-100">
+                    <div>
+                        <h3 class="font-playfair text-xl font-bold text-latte-800 flex items-center gap-2">
+                            <i class="fa-solid fa-sliders text-latte-500"></i> Configurar Precios del Menú
+                        </h3>
+                        <p class="text-xs text-latte-600 mt-0.5">
+                            Puedes ajustar o personalizar los precios de los productos según la carta actual.
+                        </p>
+                    </div>
+                    <button onclick="resetDefaultPrices()" class="text-xs font-bold text-latte-600 hover:text-latte-800 bg-latte-50 hover:bg-latte-100 px-3 py-1.5 rounded-lg border border-latte-200 transition-colors w-fit">
+                        <i class="fa-solid fa-rotate-left mr-1"></i> Precios Sugeridos
+                    </button>
+                </div>
+
+                <div id="priceEditorGrid" class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-6 gap-3">
+                    <!-- Price inputs generated dynamically -->
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- LOCATION & CONTACT / WHATSAPP SECTION -->
+    <section id="contacto" class="bg-latte-800 text-latte-100 py-12">
+        <div class="max-w-6xl mx-auto px-4 grid md:grid-cols-3 gap-8 items-start">
+            
+            <!-- Brand Column -->
+            <div class="space-y-3">
+                <div class="flex items-center gap-3">
+                    <div class="w-10 h-10 rounded-xl bg-latte-600 flex items-center justify-center text-white text-lg">
+                        <i class="fa-solid fa-mug-hot"></i>
+                    </div>
+                    <h3 class="font-playfair text-2xl font-bold text-white">SUGAR SIPS</h3>
+                </div>
+                <p class="text-xs text-latte-200 leading-relaxed">
+                    Sweets & Drinks diseñados para brindar momentos dulces y refrescantes. Calidad artesanal en cada bocado y sorbo.
+                </p>
+            </div>
+
+            <!-- Exclusive Delivery Badge -->
+            <div class="bg-latte-700/80 p-5 rounded-2xl border border-latte-600/50 space-y-2">
+                <span class="text-[10px] font-bold text-blush-200 uppercase tracking-widest block">Cobertura de Entrega</span>
+                <h4 class="font-playfair text-lg font-bold text-white flex items-center gap-2">
+                    <i class="fa-solid fa-house-chimney text-latte-300"></i> Solo Puerto Azul
+                </h4>
+                <p class="text-xs text-latte-200 leading-relaxed">
+                    Entregas exclusivas y personalizadas dentro de la urbanización Puerto Azul.
+                </p>
+            </div>
+
+            <!-- WhatsApp Direct Contact -->
+            <div class="space-y-3">
+                <h4 class="font-playfair text-lg font-bold text-white flex items-center gap-2">
+                    <i class="fa-brands fa-whatsapp text-emerald-400"></i> Pedidos por WhatsApp
+                </h4>
+                <p class="text-xs text-latte-200">Comunícate directamente a cualquiera de nuestros números:</p>
+
+                <div class="space-y-2 pt-1">
+                    <a href="https://wa.me/593963970385?text=Hola%20Sugar%20Sips,%20deseo%20consultar%20el%20menú%20para%20Puerto%20Azul" target="_blank" class="flex items-center justify-between bg-emerald-600/90 hover:bg-emerald-600 text-white px-4 py-2.5 rounded-xl text-xs font-semibold transition-all shadow-xs">
+                        <span class="flex items-center gap-2"><i class="fa-brands fa-whatsapp text-sm"></i> WhatsApp 1</span>
+                        <span class="font-mono bg-black/20 px-2 py-0.5 rounded">0963970385</span>
+                    </a>
+
+                    <a href="https://wa.me/593999511031?text=Hola%20Sugar%20Sips,%20deseo%20consultar%20el%20menú%20para%20Puerto%20Azul" target="_blank" class="flex items-center justify-between bg-emerald-600/90 hover:bg-emerald-600 text-white px-4 py-2.5 rounded-xl text-xs font-semibold transition-all shadow-xs">
+                        <span class="flex items-center gap-2"><i class="fa-brands fa-whatsapp text-sm"></i> WhatsApp 2</span>
+                        <span class="font-mono bg-black/20 px-2 py-0.5 rounded">0999511031</span>
+                    </a>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="max-w-6xl mx-auto px-4 mt-8 pt-6 border-t border-latte-700 text-center text-xs text-latte-300">
+            <p>© SUGAR SIPS - Sweets & Drinks. Exclusivo para Puerto Azul.</p>
+        </div>
+    </section>
+
+    <!-- SHOPPING CART SLIDE-OVER DRAWER -->
+    <div id="cartOverlay" onclick="toggleCart()" class="fixed inset-0 bg-latte-800/40 backdrop-blur-xs z-50 opacity-0 pointer-events-none transition-opacity duration-300"></div>
+
+    <aside id="cartDrawer" class="fixed top-0 right-0 h-full w-full sm:w-96 bg-white z-50 shadow-2xl transform translate-x-full transition-transform duration-300 ease-in-out flex flex-col">
+        
+        <!-- Drawer Header -->
+        <div class="p-4 bg-latte-100 border-b border-latte-200 flex items-center justify-between">
+            <div class="flex items-center gap-2.5">
+                <div class="w-8 h-8 rounded-lg bg-latte-600 text-white flex items-center justify-center text-sm">
+                    <i class="fa-solid fa-bag-shopping"></i>
+                </div>
+                <h3 class="font-playfair text-xl font-bold text-latte-800">Tu Pedido</h3>
+            </div>
+            <button onclick="toggleCart()" class="w-8 h-8 rounded-full bg-white text-latte-600 hover:text-latte-800 flex items-center justify-center border border-latte-200 shadow-xs">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+        </div>
+
+        <!-- Drawer Body: Selected Items -->
+        <div id="cartItemsContainer" class="p-4 flex-grow overflow-y-auto space-y-3">
+            <!-- Dynamic items loaded via JS -->
+        </div>
+
+        <!-- Drawer Footer / Checkout -->
+        <div class="p-4 border-t border-latte-200 bg-latte-50 space-y-3">
+            
+            <!-- Address / Delivery Input -->
+            <div>
+                <label class="block text-xs font-bold text-latte-700 mb-1">Dirección / Manzana en Puerto Azul:</label>
+                <input type="text" id="deliveryAddress" placeholder="Ej: Mz. 12 Sol. 4" class="w-full text-xs px-3 py-2 rounded-xl border border-latte-200 focus:outline-none focus:border-latte-500 bg-white">
+            </div>
+
+            <!-- WhatsApp Number Selection -->
+            <div>
+                <label class="block text-xs font-bold text-latte-700 mb-1">Enviar pedido a:</label>
+                <select id="whatsappTarget" class="w-full text-xs px-3 py-2 rounded-xl border border-latte-200 focus:outline-none focus:border-latte-500 bg-white font-medium text-latte-800">
+                    <option value="593963970385">0963970385 (Línea Principal)</option>
+                    <option value="593999511031">0999511031 (Línea Secundaria)</option>
+                </select>
+            </div>
+
+            <!-- Order Summary -->
+            <div class="pt-2 border-t border-latte-200/80">
+                <div class="flex justify-between items-center text-xs text-latte-600 mb-1">
+                    <span>Entrega:</span>
+                    <span class="font-bold text-latte-700">Solo Puerto Azul</span>
+                </div>
+                <div class="flex justify-between items-center text-base font-bold text-latte-800">
+                    <span>Total Estimado:</span>
+                    <span id="cartTotal" class="text-xl font-playfair text-latte-700">$0.00</span>
+                </div>
+            </div>
+
+            <!-- Send Order Button -->
+            <button onclick="checkoutWhatsApp()" class="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-3 px-4 rounded-xl shadow-md transition-all flex items-center justify-center gap-2 active:scale-98">
+                <i class="fa-brands fa-whatsapp text-lg"></i>
+                <span>Enviar Pedido por WhatsApp</span>
+            </button>
+        </div>
+    </aside>
+
+    <!-- NOTIFICATION TOAST -->
+    <div id="toast" class="fixed bottom-5 right-5 bg-latte-800 text-white px-4 py-3 rounded-2xl shadow-xl z-50 transform translate-y-20 opacity-0 transition-all duration-300 flex items-center gap-3 border border-latte-600">
+        <i class="fa-solid fa-circle-check text-blush-200 text-lg"></i>
+        <span id="toastMsg" class="text-xs font-semibold">Producto agregado</span>
+    </div>
+
+    <!-- JAVASCRIPT LOGIC -->
+    <script>
+        // Menu products definition based on original document
+        const initialProducts = [
+            {
+                id: 'c-choco',
+                category: 'cheesecake',
+                type: 'Cheesecake',
+                flavor: 'Chocolate',
+                name: 'Cheesecake de Chocolate',
+                price: 3.50,
+                icon: '🍰',
+                bgClass: 'from-amber-50 to-latte-100',
+                badgeBg: 'bg-latte-700 text-white',
+                description: 'Cremosa base de queso crema suave con cobertura densa de puro chocolate.'
+            },
+            {
+                id: 'c-fresa',
+                category: 'cheesecake',
+                type: 'Cheesecake',
+                flavor: 'Fresa',
+                name: 'Cheesecake de Fresa',
+                price: 3.50,
+                icon: '🍓',
+                bgClass: 'from-blush-50 to-blush-100',
+                badgeBg: 'bg-blush-400 text-white',
+                description: 'El equilibrio perfecto entre suavidad y mermelada dulce de fresa natural.'
+            },
+            {
+                id: 'c-oreo',
+                category: 'cheesecake',
+                type: 'Cheesecake',
+                flavor: 'Oreo',
+                name: 'Cheesecake de Oreo',
+                price: 3.75,
+                icon: '🍪',
+                bgClass: 'from-stone-50 to-latte-100',
+                badgeBg: 'bg-stone-700 text-white',
+                description: 'Mezcla cremosa repleta de crujientes trozos de galleta Oreo.'
+            },
+            {
+                id: 'f-choco',
+                category: 'frappe',
+                type: 'Frappé',
+                flavor: 'Chocolate',
+                name: 'Frappé de Chocolate',
+                price: 3.00,
+                icon: '🥤',
+                bgClass: 'from-latte-100 to-latte-200/40',
+                badgeBg: 'bg-latte-600 text-white',
+                description: 'Bebida helada ultra refrescante con intenso sabor a cacao y toque dulce.'
+            },
+            {
+                id: 'f-fresa',
+                category: 'frappe',
+                type: 'Frappé',
+                flavor: 'Fresa',
+                name: 'Frappé de Fresa',
+                price: 3.00,
+                icon: '🥤',
+                bgClass: 'from-blush-100/60 to-latte-100',
+                badgeBg: 'bg-blush-400 text-white',
+                description: 'Frappé helado batido con notas frutales y refrescantes de fresa.'
+            },
+            {
+                id: 'f-oreo',
+                category: 'frappe',
+                type: 'Frappé',
+                flavor: 'Oreo',
+                name: 'Frappé de Oreo',
+                price: 3.25,
+                icon: '🥤',
+                bgClass: 'from-slate-100 to-latte-100',
+                badgeBg: 'bg-slate-700 text-white',
+                description: 'Bebida helada cremosita batida con galletas Oreo y tope suave.'
+            }
+        ];
+
+        // Global State
+        let products = JSON.parse(JSON.stringify(initialProducts));
+        let cart = [];
+        let activeFilter = 'all';
+
+        // Initialize on Load
+        window.addEventListener('DOMContentLoaded', () => {
+            renderProducts();
+            renderPriceEditor();
+            updateCartUI();
+        });
+
+        // Render Products Menu
+        function renderProducts() {
+            const container = document.getElementById('productsGrid');
+            container.innerHTML = '';
+
+            const itemsToDisplay = activeFilter === 'all' 
+                ? products 
+                : products.filter(p => p.category === activeFilter);
+
+            itemsToDisplay.forEach(product => {
+                const card = document.createElement('div');
+                card.className = `bg-gradient-to-br ${product.bgClass} rounded-3xl p-6 shadow-xs hover:shadow-md transition-all duration-300 border border-latte-200/60 flex flex-col justify-between group`;
+
+                card.innerHTML = `
+                    <div>
+                        <div class="flex justify-between items-start mb-3">
+                            <span class="text-4xl group-hover:scale-110 transition-transform duration-300">${product.icon}</span>
+                            <span class="text-[11px] font-bold px-3 py-1 rounded-full ${product.badgeBg} shadow-2xs">
+                                ${product.type}
+                            </span>
+                        </div>
+                        <h3 class="font-playfair text-xl font-bold text-latte-800 mb-1">${product.name}</h3>
+                        <p class="text-xs text-latte-600 leading-relaxed mb-4">${product.description}</p>
+                    </div>
+
+                    <div class="pt-3 border-t border-latte-200/50 flex items-center justify-between">
+                        <div>
+                            <span class="text-[10px] uppercase font-bold text-latte-400 block">Precio</span>
+                            <span class="font-playfair text-2xl font-bold text-latte-800">$${product.price.toFixed(2)}</span>
+                        </div>
+                        <button onclick="addToCart('${product.id}')" class="bg-latte-700 hover:bg-latte-800 text-white px-4 py-2.5 rounded-2xl text-xs font-bold transition-all shadow-xs active:scale-95 flex items-center gap-1.5">
+                            <i class="fa-solid fa-plus"></i> Agregar
+                        </button>
+                    </div>
+                `;
+                container.appendChild(card);
+            });
+        }
+
+        // Category Filtering
+        function filterCategory(category) {
+            activeFilter = category;
+            
+            document.querySelectorAll('.cat-tab').forEach(tab => {
+                tab.className = "cat-tab bg-white text-latte-700 hover:bg-latte-100 border border-latte-200 px-5 py-2 rounded-full text-xs sm:text-sm font-semibold transition-all";
+            });
+
+            const activeTab = document.getElementById(`tab-${category}`);
+            if (activeTab) {
+                activeTab.className = "cat-tab bg-latte-700 text-white px-5 py-2 rounded-full text-xs sm:text-sm font-semibold transition-all shadow-xs";
+            }
+
+            renderProducts();
+        }
+
+        // Render Price Customization Controls
+        function renderPriceEditor() {
+            const container = document.getElementById('priceEditorGrid');
+            container.innerHTML = '';
+
+            products.forEach(product => {
+                const item = document.createElement('div');
+                item.className = "bg-latte-50/80 p-2.5 rounded-2xl border border-latte-200 text-center";
+                item.innerHTML = `
+                    <span class="block text-[11px] font-bold text-latte-700 truncate" title="${product.name}">${product.flavor} (${product.type[0]})</span>
+                    <div class="mt-1 flex items-center justify-center gap-1">
+                        <span class="text-xs font-bold text-latte-500">$</span>
+                        <input type="number" step="0.25" min="0" value="${product.price.toFixed(2)}"
+                            onchange="updatePrice('${product.id}', this.value)"
+                            class="w-16 text-center text-xs font-bold bg-white border border-latte-300 rounded-lg py-1 focus:outline-none focus:border-latte-600 text-latte-800">
+                    </div>
+                `;
+                container.appendChild(item);
+            });
+        }
+
+        // Update Price Handler
+        function updatePrice(id, val) {
+            const num = parseFloat(val);
+            if (!isNaN(num) && num >= 0) {
+                const prod = products.find(p => p.id === id);
+                if (prod) {
+                    prod.price = num;
+                    
+                    // Update item in cart if exists
+                    const cartItem = cart.find(c => c.id === id);
+                    if (cartItem) {
+                        cartItem.price = num;
+                    }
+
+                    renderProducts();
+                    updateCartUI();
+                    showToast(`Precio de ${prod.name} actualizado`);
+                }
+            }
+        }
+
+        // Reset to Default Prices
+        function resetDefaultPrices() {
+            products = JSON.parse(JSON.stringify(initialProducts));
+            cart.forEach(cItem => {
+                const original = products.find(p => p.id === cItem.id);
+                if (original) cItem.price = original.price;
+            });
+
+            renderProducts();
+            renderPriceEditor();
+            updateCartUI();
+            showToast("Precios restablecidos");
+        }
+
+        // Cart Actions
+        function addToCart(id) {
+            const product = products.find(p => p.id === id);
+            if (!product) return;
+
+            const existing = cart.find(item => item.id === id);
+            if (existing) {
+                existing.quantity += 1;
+            } else {
+                cart.push({
+                    id: product.id,
+                    name: product.name,
+                    price: product.price,
+                    icon: product.icon,
+                    quantity: 1
+                });
+            }
+
+            updateCartUI();
+            showToast(`¡${product.name} agregado!`);
+        }
+
+        function changeQuantity(id, delta) {
+            const item = cart.find(i => i.id === id);
+            if (item) {
+                item.quantity += delta;
+                if (item.quantity <= 0) {
+                    cart = cart.filter(i => i.id !== id);
+                }
+            }
+            updateCartUI();
+        }
+
+        function updateCartUI() {
+            const container = document.getElementById('cartItemsContainer');
+            const badge = document.getElementById('cartBadge');
+            const totalEl = document.getElementById('cartTotal');
+
+            const totalCount = cart.reduce((sum, item) => sum + item.quantity, 0);
+            badge.textContent = totalCount;
+
+            if (cart.length === 0) {
+                container.innerHTML = `
+                    <div class="text-center py-16 text-latte-400">
+                        <i class="fa-solid fa-mug-saucer text-4xl mb-3 opacity-50"></i>
+                        <p class="text-sm font-semibold">Tu carrito está vacío</p>
+                        <p class="text-xs text-latte-500 mt-1">¡Añade un delicioso postre o bebida!</p>
+                    </div>
+                `;
+            } else {
+                container.innerHTML = '';
+                cart.forEach(item => {
+                    const el = document.createElement('div');
+                    el.className = "flex items-center justify-between p-3 bg-latte-50 rounded-2xl border border-latte-200/70";
+                    el.innerHTML = `
+                        <div class="flex items-center gap-3">
+                            <span class="text-2xl">${item.icon}</span>
+                            <div>
+                                <h4 class="text-xs font-bold text-latte-800 leading-tight">${item.name}</h4>
+                                <span class="text-xs font-bold text-latte-600">$${(item.price * item.quantity).toFixed(2)}</span>
+                            </div>
+                        </div>
+                        <div class="flex items-center gap-2 bg-white px-2 py-1 rounded-xl border border-latte-200">
+                            <button onclick="changeQuantity('${item.id}', -1)" class="w-5 h-5 text-latte-600 hover:text-latte-800 font-bold text-xs">-</button>
+                            <span class="text-xs font-bold text-latte-800 w-4 text-center">${item.quantity}</span>
+                            <button onclick="changeQuantity('${item.id}', 1)" class="w-5 h-5 text-latte-600 hover:text-latte-800 font-bold text-xs">+</button>
+                        </div>
+                    `;
+                    container.appendChild(el);
+                });
+            }
+
+            const grandTotal = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+            totalEl.textContent = `$${grandTotal.toFixed(2)}`;
+        }
+
+        // Drawer Toggle
+        function toggleCart() {
+            const drawer = document.getElementById('cartDrawer');
+            const overlay = document.getElementById('cartOverlay');
+
+            const isOpen = !drawer.classList.contains('translate-x-full');
+
+            if (isOpen) {
+                drawer.classList.add('translate-x-full');
+                overlay.classList.add('opacity-0', 'pointer-events-none');
+            } else {
+                drawer.classList.remove('translate-x-full');
+                overlay.classList.remove('opacity-0', 'pointer-events-none');
+            }
+        }
+
+        // Send Order to Selected WhatsApp Number
+        function checkoutWhatsApp() {
+            if (cart.length === 0) {
+                showToast("⚠️ Tu carrito está vacío");
+                return;
+            }
+
+            const phone = document.getElementById('whatsappTarget').value;
+            const address = document.getElementById('deliveryAddress').value.trim();
+
+            let text = "✨ *NUEVO PEDIDO - SUGAR SIPS* ✨\n\n";
+            text += "📍 *Ubicación:* Solo Puerto Azul\n";
+            if (address) {
+                text += `🏡 *Dirección/Mz:* ${address}\n`;
+            }
+            text += "\n📋 *Detalle del Pedido:*\n";
+
+            let grandTotal = 0;
+            cart.forEach((item, idx) => {
+                const subtotal = item.price * item.quantity;
+                grandTotal += subtotal;
+                text += `${idx + 1}. ${item.name} x${item.quantity} - $${subtotal.toFixed(2)}\n`;
+            });
+
+            text += `\n💵 *Total del Pedido:* $${grandTotal.toFixed(2)}\n\n`;
+            text += "Por favor confirmen la recepción y tiempo aproximado de entrega. ¡Gracias! 💕";
+
+            const encoded = encodeURIComponent(text);
+            window.open(`https://wa.me/${phone}?text=${encoded}`, '_blank');
+        }
+
+        // Notification Toast
+        function showToast(msg) {
+            const toast = document.getElementById('toast');
+            const toastMsg = document.getElementById('toastMsg');
+
+            toastMsg.textContent = msg;
+            toast.classList.remove('translate-y-20', 'opacity-0');
+
+            setTimeout(() => {
+                toast.classList.add('translate-y-20', 'opacity-0');
+            }, 3000);
+        }
+    </script>
+</body>
+</html>
